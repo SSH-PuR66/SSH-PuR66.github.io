@@ -1,0 +1,31 @@
+{
+  "sample_rate": 8000,
+  "seconds": 6.0,
+  "burst_count": 3,
+  "burst_durations_s": [
+    0.9,
+    0.7,
+    0.8
+  ],
+  "duty_cycle": 0.403,
+  "ctcss_detected": [
+    {
+      "hz": 88.5,
+      "snr": 35.0
+    },
+    {
+      "hz": 91.5,
+      "snr": 7.8
+    },
+    {
+      "hz": 85.4,
+      "snr": 6.8
+    }
+  ],
+  "ctcss_lock": {
+    "hz": 88.5,
+    "snr": 35.0,
+    "margin": 4.5
+  },
+  "note": "CTCSS subtone present = closed-access radio usage (community/repeater); absent = open squelch"
+}

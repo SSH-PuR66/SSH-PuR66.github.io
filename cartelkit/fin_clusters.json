@@ -1,0 +1,14 @@
+{
+  "sha256": "72bfd900342d08a9947da3b726013f0f633677b7ecd6a0a213c080d8c6c1958a",
+  "tx_parsed": 3,
+  "cluster_count": 1,
+  "wallets_clustered": 4,
+  "clusters": [
+    [
+      "W-A",
+      "W-B",
+      "W-C",
+      "W-D"
+    ]
+  ]
+}

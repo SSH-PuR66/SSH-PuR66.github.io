@@ -1,0 +1,34 @@
+{
+  "generated": "2026-08-15T01:04:44Z",
+  "synthetic": true,
+  "pillars": [
+    "fin_clusters",
+    "fin_ledger",
+    "osint",
+    "sdr_sweep",
+    "sdr_wav",
+    "validate"
+  ],
+  "headline": {
+    "osint": {
+      "docs": 3,
+      "priority1": 2,
+      "link_nodes": 2
+    },
+    "fin": {
+      "flags": [
+        "STRUCTURING",
+        "DISPERSION-HUB",
+        "PEEL-CHAIN"
+      ],
+      "clusters": 1
+    },
+    "sdr": {
+      "carriers": 3,
+      "ptt_pattern": 1,
+      "ctcss": [
+        88.5
+      ]
+    }
+  }
+}

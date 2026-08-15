@@ -1,0 +1,315 @@
+{
+  "dir": "C:\\Users\\PuR63\\Desktop\\cartelkit_out\\demo_tape\\intel",
+  "doc_count": 3,
+  "docs": [
+    {
+      "file": "leak_A.txt",
+      "sha256": "3571043dc21b26f1e397f46eebf54c6fea5be6eb010054ccecb5507afd72cbe9",
+      "chars": 616,
+      "score": 87,
+      "tier": "PRIORITY-1",
+      "lex": [
+        {
+          "term": "plaza",
+          "count": 4,
+          "weight": 3
+        },
+        {
+          "term": "cjng",
+          "count": 1,
+          "weight": 10
+        },
+        {
+          "term": "mencho",
+          "count": 1,
+          "weight": 10
+        },
+        {
+          "term": "grupo elite",
+          "count": 1,
+          "weight": 7
+        },
+        {
+          "term": "cobro de piso",
+          "count": 1,
+          "weight": 6
+        },
+        {
+          "term": "jefe de plaza",
+          "count": 1,
+          "weight": 6
+        },
+        {
+          "term": "wickr",
+          "count": 1,
+          "weight": 6
+        },
+        {
+          "term": "escrow",
+          "count": 1,
+          "weight": 5
+        }
+      ],
+      "ioc_counts": {
+        "onion_v3": 1,
+        "telegram_url": 1,
+        "telegram_handle": 1,
+        "btc_bech32": 1,
+        "session_id": 1
+      },
+      "iocs": {
+        "onion_v3": [
+          "xkvyxtznxg3zewzztbwh5pku5qmece2dbmmgsm4uav3octnlld75b7wq.onion"
+        ],
+        "telegram_url": [
+          "t.me/plazabossgdl"
+        ],
+        "telegram_handle": [
+          "@plazabossgdl"
+        ],
+        "btc_bech32": [
+          "bc1qqypqxpq9qcrsszg2pvxq6rs0zqg3yyc5fcj4z3"
+        ],
+        "session_id": [
+          "05487c2e0a28fc41c6e3791f6ba8341f9044e2fe0565771eec9a0db35209656325"
+        ]
+      }
+    },
+    {
+      "file": "leak_B.txt",
+      "sha256": "c56ad7f823508a45a1aa5a9f64a3f6f47baf37a9fb305fe403d15f9b5f280b7f",
+      "chars": 597,
+      "score": 29,
+      "tier": "PRIORITY-1",
+      "lex": [
+        {
+          "term": "matazetas",
+          "count": 1,
+          "weight": 8
+        },
+        {
+          "term": "narcobloqueo",
+          "count": 1,
+          "weight": 5
+        },
+        {
+          "term": "fentanilo",
+          "count": 1,
+          "weight": 4
+        },
+        {
+          "term": "plaza",
+          "count": 1,
+          "weight": 3
+        },
+        {
+          "term": "michoacan",
+          "count": 1,
+          "weight": 3
+        },
+        {
+          "term": "guanajuato",
+          "count": 1,
+          "weight": 3
+        },
+        {
+          "term": "monstruo",
+          "count": 1,
+          "weight": 3
+        }
+      ],
+      "ioc_counts": {
+        "onion_v3": 1,
+        "telegram_handle": 1,
+        "btc_bech32": 1,
+        "btc_base58": 1,
+        "xmr_address": 1
+      },
+      "iocs": {
+        "onion_v3": [
+          "xkvyxtznxg3zewzztbwh5pku5qmece2dbmmgsm4uav3octnlld75b7wq.onion"
+        ],
+        "telegram_handle": [
+          "@plazabossgdl"
+        ],
+        "btc_bech32": [
+          "bc1qqypqxpq9qcrsszg2qvxq6rs0zqg3yyc5fcj4z3"
+        ],
+        "btc_base58": [
+          "12vVetEDTqCWTy5uGQJ5xr8Kz92SZYDZxM"
+        ],
+        "xmr_address": [
+          "445n94zBMu6DVbvHy4cAUPfny3UKpA4hWPR5EPjkifHnED9XSgUcHBFnvNSgDtqgTBnXgmhM32bfDiULqbMrSxPFLzVeRhR"
+        ]
+      }
+    },
+    {
+      "file": "leak_C.txt",
+      "sha256": "324b7b02e97bdc93ba4fa6da44552d4d96283d34be52169d8b9698069fa1dd33",
+      "chars": 183,
+      "score": 7,
+      "tier": "BACKGROUND",
+      "lex": [
+        {
+          "term": "plaza",
+          "count": 1,
+          "weight": 3
+        },
+        {
+          "term": "dron",
+          "count": 1,
+          "weight": 2
+        },
+        {
+          "term": "cobro",
+          "count": 1,
+          "weight": 2
+        }
+      ],
+      "ioc_counts": {},
+      "iocs": {}
+    }
+  ],
+  "synthetic": true,
+  "entity_count": 8,
+  "entities": [
+    {
+      "value": "05487c2e0a28fc41c6e3791f6ba8341f9044e2fe0565771eec9a0db35209656325",
+      "type": "session_id",
+      "docs": [
+        "leak_A.txt"
+      ]
+    },
+    {
+      "value": "12vVetEDTqCWTy5uGQJ5xr8Kz92SZYDZxM",
+      "type": "btc_base58",
+      "docs": [
+        "leak_B.txt"
+      ]
+    },
+    {
+      "value": "445n94zBMu6DVbvHy4cAUPfny3UKpA4hWPR5EPjkifHnED9XSgUcHBFnvNSgDtqgTBnXgmhM32bfDiULqbMrSxPFLzVeRhR",
+      "type": "xmr_address",
+      "docs": [
+        "leak_B.txt"
+      ]
+    },
+    {
+      "value": "@plazabossgdl",
+      "type": "telegram_handle",
+      "docs": [
+        "leak_A.txt",
+        "leak_B.txt"
+      ]
+    },
+    {
+      "value": "bc1qqypqxpq9qcrsszg2pvxq6rs0zqg3yyc5fcj4z3",
+      "type": "btc_bech32",
+      "docs": [
+        "leak_A.txt"
+      ]
+    },
+    {
+      "value": "bc1qqypqxpq9qcrsszg2qvxq6rs0zqg3yyc5fcj4z3",
+      "type": "btc_bech32",
+      "docs": [
+        "leak_B.txt"
+      ]
+    },
+    {
+      "value": "t.me/plazabossgdl",
+      "type": "telegram_url",
+      "docs": [
+        "leak_A.txt"
+      ]
+    },
+    {
+      "value": "xkvyxtznxg3zewzztbwh5pku5qmece2dbmmgsm4uav3octnlld75b7wq.onion",
+      "type": "onion_v3",
+      "docs": [
+        "leak_A.txt",
+        "leak_B.txt"
+      ]
+    }
+  ],
+  "link_nodes": [
+    {
+      "value": "@plazabossgdl",
+      "type": "telegram_handle",
+      "docs": [
+        "leak_A.txt",
+        "leak_B.txt"
+      ]
+    },
+    {
+      "value": "xkvyxtznxg3zewzztbwh5pku5qmece2dbmmgsm4uav3octnlld75b7wq.onion",
+      "type": "onion_v3",
+      "docs": [
+        "leak_A.txt",
+        "leak_B.txt"
+      ]
+    }
+  ],
+  "top_terms": [
+    {
+      "term": "plaza",
+      "count": 6
+    },
+    {
+      "term": "dron",
+      "count": 2
+    },
+    {
+      "term": "cobro",
+      "count": 2
+    },
+    {
+      "term": "cjng",
+      "count": 1
+    },
+    {
+      "term": "mencho",
+      "count": 1
+    },
+    {
+      "term": "grupo elite",
+      "count": 1
+    },
+    {
+      "term": "cobro de piso",
+      "count": 1
+    },
+    {
+      "term": "jefe de plaza",
+      "count": 1
+    },
+    {
+      "term": "wickr",
+      "count": 1
+    },
+    {
+      "term": "escrow",
+      "count": 1
+    },
+    {
+      "term": "sicario",
+      "count": 1
+    },
+    {
+      "term": "halcon",
+      "count": 1
+    },
+    {
+      "term": "tlajomulco",
+      "count": 1
+    },
+    {
+      "term": "cristal",
+      "count": 1
+    },
+    {
+      "term": "zapopan",
+      "count": 1
+    }
+  ]
+}
