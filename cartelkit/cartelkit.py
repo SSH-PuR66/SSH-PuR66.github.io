@@ -263,12 +263,12 @@ def analyze_rtl_power(path):
                 lo = float(parts[2]); step = float(parts[4]); n = int(float(parts[5]))
                 vals = [float(x) for x in parts[6:6 + n]]
             except ValueError: continue
-            if vals: sweeps.append((lo, step, vals))
+            if vals: sweeps.append((lo, step, vals, parts[0] + 'T' + parts[1] + 'Z'))
     if not sweeps: return {'error': 'no rtl_power sweeps parsed'}
-    lo, step, _ = sweeps[0]
-    n = max(len(v) for _, _, v in sweeps)
+    lo, step, _, _ts0 = sweeps[0]
+    n = max(len(v) for _, _, v, _ts in sweeps)
     acc = [[] for _ in range(n)]
-    for _, _, vals in sweeps:
+    for _, _, vals, _ts in sweeps:
         for i, v in enumerate(vals): acc[i].append(v)
     allv = [v for series in acc for v in series]
     floor = statistics.median(allv); thr = floor + 9.0
@@ -288,10 +288,19 @@ def analyze_rtl_power(path):
     pmax = [max(a) if a else floor for a in acc]
     kk = max(1, len(pmax) // 160)
     spec = [round(max(pmax[i:i+kk]), 1) for i in range(0, len(pmax), kk)][:160]
+    ptt_bin = None; ptt_mhz = None
+    for c in carriers:
+        if 'PTT' in c['class']:
+            ptt_bin = int(round((c['mhz'] * 1e6 - lo) / step)); ptt_mhz = c['mhz']; break
+    ptt_track = []
+    if ptt_bin is not None and 0 <= ptt_bin < n:
+        for k, (_l, _s, _v, _t) in enumerate(sweeps):
+            act = (k < len(acc[ptt_bin])) and (acc[ptt_bin][k] > thr)
+            ptt_track.append({'ts': _t, 'active': act})
     return {'sweeps': len(sweeps), 'bins': n, 'noise_floor_db': round(floor,1),
             'threshold_db': round(thr,1), 'carrier_count': len(carriers),
             'band_mhz': [round(lo/1e6,3), round((lo + step*(n-1))/1e6,3)], 'carriers': carriers[:25],
-            'spectrum_max_db': spec}
+            'spectrum_max_db': spec, 'ptt_track': ptt_track, 'ptt_mhz': ptt_mhz}
 def _decode_wav(path):
     w = wave.open(path, 'rb')
     ch = w.getnchannels(); sw = w.getsampwidth(); fs = w.getframerate()
@@ -304,6 +313,11 @@ def _decode_wav(path):
     return x, fs
 def analyze_wav(path):
     x, fs = _decode_wav(path)
+    abs0 = None
+    _mp = (path[:path.rfind('.')] + '_META.json') if '.' in path else (path + '_META.json')
+    if os.path.isfile(_mp):
+        try: abs0 = json.load(open(_mp, encoding='utf-8')).get('start_utc')
+        except Exception: abs0 = None
     win = max(1, fs // 20); env = []
     for i in range(0, len(x) - win, win):
         seg = x[i:i + win]; env.append(math.sqrt(sum(v*v for v in seg) / win))
@@ -335,10 +349,88 @@ def analyze_wav(path):
         mg = round(top['snr'] / tones[1]['snr'], 1) if len(tones) > 1 else None
         if len(tones) == 1 or top['snr'] >= 3.0 * tones[1]['snr']:
             lock = {'hz': top['hz'], 'snr': top['snr'], 'margin': mg}
+    abs_b = []
+    if abs0:
+        try:
+            _t0 = datetime.datetime.strptime(abs0, '%Y-%m-%dT%H:%M:%SZ')
+            abs_b = [(_t0 + datetime.timedelta(seconds=(a2 * win) / fs)).strftime('%Y-%m-%dT%H:%M:%SZ') for (a2, _b2) in bursts]
+        except Exception: abs_b = []
     return {'sample_rate': fs, 'seconds': round(len(x)/fs,2), 'burst_count': len(bursts),
             'burst_durations_s': [round(d,2) for d in durs][:12], 'duty_cycle': round(duty,3),
-            'ctcss_detected': tones[:6], 'ctcss_lock': lock,
+            'ctcss_detected': tones[:6], 'ctcss_lock': lock, 'abs_bursts_utc': abs_b,
             'note': 'CTCSS subtone present = closed-access radio usage (community/repeater); absent = open squelch'}
+
+def _parse_day(s):
+    s = (s or '').strip()
+    for cand, fmt in ((s[:19], '%Y-%m-%dT%H:%M:%S'), (s[:10], '%Y-%m-%d')):
+        try: return datetime.datetime.strptime(cand, fmt)
+        except Exception: pass
+    return None
+def tempo_fusion(ledger_path, sweep_res, wav_res):
+    money = []
+    try:
+        with open(ledger_path, newline='', encoding='utf-8-sig') as fh:
+            for row in csv.DictReader(fh):
+                ts = (row.get('ts') or '').strip()
+                if ts.startswith('#'): continue
+                d = _parse_day(ts)
+                if d: money.append({'ts': ts, 'day': d.strftime('%Y-%m-%d'),
+                    'label': '%s -> %s (%s %s)' % ((row.get('src') or '').strip(), (row.get('dst') or '').strip(), (row.get('amount') or '').strip(), (row.get('asset') or '').strip())})
+    except Exception: pass
+    rf_days = {}
+    for t in ((sweep_res or {}).get('ptt_track') or []):
+        d = _parse_day(t.get('ts', ''))
+        if not d: continue
+        key = d.strftime('%Y-%m-%d')
+        agg = rf_days.setdefault(key, {'active': 0, 'total': 0})
+        agg['total'] += 1
+        if t.get('active'): agg['active'] += 1
+    wav_b = (wav_res or {}).get('abs_bursts_utc') or []
+    wav_days = []
+    for x in wav_b:
+        d = _parse_day(x)
+        if d: wav_days.append(d.strftime('%Y-%m-%d'))
+    coin = []
+    for m in money:
+        rf = rf_days.get(m['day']); ra = rf['active'] if rf else 0
+        wb = wav_days.count(m['day'])
+        if ra or wb: coin.append({'money': m['label'], 'day': m['day'], 'rf_active_sweeps': ra, 'wav_bursts': wb})
+    flags = []
+    if sum(1 for c in coin if c['rf_active_sweeps'] > 0) >= 2:
+        flags.append({'kind': 'TEMPO-CORR', 'detail': 'money movement days coincide with PTT-pattern RF activity near %.3f MHz - operational tempo correlation' % ((sweep_res or {}).get('ptt_mhz') or 0.0)})
+    if any(c['wav_bursts'] for c in coin):
+        flags.append({'kind': 'COMMS-PAYMENT-COINCIDENCE', 'detail': 'recorded keyed bursts land on a ledger payment day'})
+    return {'money_events': len(money), 'rf_days': rf_days, 'wav_bursts_abs': wav_b,
+            'coincidences': coin, 'flags': flags,
+            'note': 'day-granularity correlation (ledger timestamps are date-only); coincidence is a lead, not proof'}
+def svg_timeline(tp):
+    days = sorted(set(list((tp.get('rf_days') or {}).keys()) + [c['day'] for c in (tp.get('coincidences') or [])]))
+    if not days: return ''
+    d0 = _parse_day(days[0]); d1 = _parse_day(days[-1])
+    if not d0 or not d1: return ''
+    span = max((d1 - d0).days, 1)
+    W, H = 860, 120
+    def X(day):
+        d = _parse_day(day)
+        return 8.0 + (d - d0).days * (W - 60) / span if d else 8.0
+    out = ['<svg width="%d" height="%d" style="background:#0d1412;border:1px solid #1d3a35;margin:8px 0">' % (W, H)]
+    out.append('<line x1="0" y1="45" x2="%d" y2="45" stroke="#1d3a35"/>' % W)
+    out.append('<line x1="0" y1="95" x2="%d" y2="95" stroke="#1d3a35"/>' % W)
+    out.append('<text x="4" y="14" fill="#37e0c8" font-size="11">RF LANE (PTT-pattern activity)</text>')
+    out.append('<text x="4" y="66" fill="#ffb454" font-size="11">MONEY LANE (ledger events)</text>')
+    for day, agg in sorted((tp.get('rf_days') or {}).items()):
+        x = X(day)
+        h = min(30.0, 4.0 + 15.0 * agg['active'] / max(agg['total'], 1))
+        out.append('<rect x="%.1f" y="%.1f" width="7" height="%.1f" fill="%s"/>' % (x, 45 - h, h, '#37e0c8' if agg['active'] else '#1d3a35'))
+    for c in (tp.get('coincidences') or []):
+        x = X(c['day'])
+        out.append('<rect x="%.1f" y="97" width="7" height="11" fill="#ffb454"/>' % x)
+        out.append('<line x1="%.1f" y1="6" x2="%.1f" y2="112" stroke="#ff6b5e" stroke-dasharray="3 3"/>' % (x + 3.5, x + 3.5))
+    out.append('<text x="8" y="%d" fill="#4d7a72" font-size="11">%s</text>' % (H - 2, days[0]))
+    out.append('<text x="%d" y="%d" fill="#4d7a72" font-size="11" text-anchor="end">%s</text>' % (W - 8, H - 2, days[-1]))
+    out.append('</svg>')
+    return ''.join(out)
+
 
 # ============ synthetic demo tape forge ============
 def forge(tape):
@@ -390,7 +482,8 @@ def forge(tape):
             vals[120] += 26.0
             if i % 5 in (0, 1): vals[310] += 18.0
             if i in (7, 19): vals[400] += 14.0
-            row = ['2024-06-%02d' % (1 + i % 28), '%02d:%02d:%02d' % (i % 24, (i*7) % 60, (i*13) % 60),
+            _ts = datetime.datetime(2024, 1, 20, 6, 0, 0) + datetime.timedelta(days=i % 5, hours=i // 5)
+            row = [_ts.strftime('%Y-%m-%d'), _ts.strftime('%H:%M:%S'),
                    '%.0f' % lo, '%.0f' % (lo + step * nb), '%.1f' % step, str(nb)] + ['%.1f' % v for v in vals]
             fh.write(', '.join(row) + '\n')
     wv = os.path.join(tape, 'capture_SYNTHETIC.wav')
@@ -405,6 +498,7 @@ def forge(tape):
         v = max(-1.0, min(1.0, v)); frames.append(int(v * 32767))
     w = wave.open(wv, 'wb'); w.setnchannels(1); w.setsampwidth(2); w.setframerate(fs)
     w.writeframes(struct.pack('<%dh' % len(frames), *frames)); w.close()
+    open(wv[:wv.rfind('.')] + '_META.json', 'w', encoding='utf-8').write(json.dumps({'start_utc': '2024-02-01T09:00:00Z'}))
     open(os.path.join(tape, 'README_SYNTHETIC.txt'), 'w', encoding='utf-8').write(
         'SYNTHETIC DEMO TAPE. Every artifact in this folder is forged training data '
         'for pipeline verification. Real addresses are generated with VALID checksums '
@@ -517,6 +611,16 @@ def render(res, out_html, synthetic):
         if w['ctcss_detected']:
             S.append(tbl(['CTCSS tone (Hz)','SNR vs floor'], [[t['hz'], t['snr']] for t in w['ctcss_detected']]))
         S.append('<div class="meta">%s</div>' % esc(w['note']))
+    if 'tempo' in res:
+        tp = res['tempo']
+        S.append('<h2>PILLAR 4 -- CROSS-SENSOR TEMPO FUSION</h2>')
+        S.append('<div>%d ledger events coincide with RF / recorded-comms activity</div>' % len(tp['coincidences']))
+        S.append(svg_timeline(tp))
+        if tp['flags']:
+            S.append(tbl(['flag','detail'], [['<span class="flag">%s</span>' % esc(f['kind']), esc(f['detail'])] for f in tp['flags']]))
+        if tp['coincidences']:
+            S.append(tbl(['money event','day','rf-active sweeps','wav bursts'], [[esc(c['money']), esc(c['day']), c['rf_active_sweeps'], c['wav_bursts']] for c in tp['coincidences'][:20]]))
+        S.append('<div class="meta">%s</div>' % esc(tp['note']))
     S.append('<h2>METHOD / PROVENANCE</h2><div class="meta">All artifacts SHA-256 listed in MANIFEST.sha256. Wallet validation implements BIP-173 polymod + Base58Check in-pure-Python (independently recomputable). RF analysis accepts real rtl_power / rtl_power_fftw CSV and WAV captures via CLI. Authorized defensive research only -- not legal advice.</div>')
     S.append('</body></html>')
     open(out_html, 'w', encoding='utf-8').write(''.join(S))
@@ -582,6 +686,10 @@ def run_pipeline(out, intel=None, ledger=None, clusters=None, sweep=None, wav=No
         print('[5/5] PILLAR 3: wav comms forensics ->', wav)
         res['sdr_wav'] = analyze_wav(wav)
         write_json(os.path.join(resd, 'sdr_wav.json'), res['sdr_wav'])
+    if ledger and sweep:
+        print('[6/6] PILLAR 4: cross-sensor tempo fusion')
+        res['tempo'] = tempo_fusion(ledger, res.get('sdr_sweep'), res.get('sdr_wav'))
+        write_json(os.path.join(resd, 'tempo_fusion.json'), res['tempo'])
     print('[*] FUSION + DOSSIER')
     summ = {'generated': UTC(), 'synthetic': synthetic,
             'pillars': sorted(res.keys()),
@@ -597,6 +705,9 @@ def run_pipeline(out, intel=None, ledger=None, clusters=None, sweep=None, wav=No
         summ['headline']['sdr'] = {'carriers': res['sdr_sweep']['carrier_count'],
             'ptt_pattern': sum(1 for c in res['sdr_sweep']['carriers'] if 'PTT' in c['class']),
             'ctcss': ([res['sdr_wav']['ctcss_lock']['hz']] if res.get('sdr_wav', {}).get('ctcss_lock') else [])}
+    if 'tempo' in res:
+        summ['headline']['tempo'] = {'coincidences': len(res['tempo']['coincidences']),
+            'flags': [f['kind'] for f in res['tempo']['flags']]}
     write_json(os.path.join(resd, 'summary.json'), summ)
     render(res, os.path.join(resd, 'dossier.html'), synthetic)
     open(os.path.join(resd, 'README.md'), 'w', encoding='utf-8').write(README_TXT)

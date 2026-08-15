@@ -1,0 +1,45 @@
+{
+  "money_events": 22,
+  "rf_days": {
+    "2024-01-20": {
+      "active": 6,
+      "total": 6
+    },
+    "2024-01-21": {
+      "active": 6,
+      "total": 6
+    },
+    "2024-01-22": {
+      "active": 0,
+      "total": 6
+    },
+    "2024-01-23": {
+      "active": 0,
+      "total": 6
+    },
+    "2024-01-24": {
+      "active": 0,
+      "total": 6
+    }
+  },
+  "wav_bursts_abs": [
+    "2024-02-01T09:00:00Z",
+    "2024-02-01T09:00:02Z",
+    "2024-02-01T09:00:04Z"
+  ],
+  "coincidences": [
+    {
+      "money": "PREPAID -> PA (1000 XBT)",
+      "day": "2024-02-01",
+      "rf_active_sweeps": 0,
+      "wav_bursts": 3
+    }
+  ],
+  "flags": [
+    {
+      "kind": "COMMS-PAYMENT-COINCIDENCE",
+      "detail": "recorded keyed bursts land on a ledger payment day"
+    }
+  ],
+  "note": "day-granularity correlation (ledger timestamps are date-only); coincidence is a lead, not proof"
+}
