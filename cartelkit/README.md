@@ -1,28 +1,33 @@
-CARTELKIT v1.0 -- three-pillar cartel-infrastructure exploitation kit
-Zero-dependency (Python 3.8+ stdlib only). Passive-collection discipline.
+# CARTELKIT: public-source assessment
 
-DEMO (end-to-end, synthetic tape):
-  python cartelkit.py all --out cartelkit_out
+Edition: 2026-10-05. Two organizations, ten sources, nine attributed records, and four research judgments. Oversight and academic records provide institutional or methodological context; they are not attributed to a cartel.
 
-LIVE SWAP-IN (zero code changes -- CLI only):
-  python cartelkit.py osint        --dir  intercepted_dumps/        --out out/osint.json
-  python cartelkit.py fin-validate --addr bc1q... 
-  python cartelkit.py fin-ledger   --csv  ledger.csv                --out out/ledger.json
-  python cartelkit.py fin-clusters --jsonl vin_stream.jsonl         --out out/clusters.json
-  python cartelkit.py sdr-sweep    --csv  rtl_power_fftw_capture.csv --out out/sweep.json
-  python cartelkit.py sdr-wav      --wav  capture.wav               --out out/wav.json
-  python cartelkit.py run --intel dumps/ --ledger ledger.csv --sweep cap.csv --wav cap.wav --out out
-    (any subset of flags; fuses whatever is supplied + dossier.html + zip)
+## Read the files
 
-PILLARS:
- 1 OSINT exploitation  -- onion v2/v3, TG handles/URLs, Session IDs, Jabber/Wickr,
-    BTC/XMR wallets, IPv4, email harvesting; weighted cartel-lexicon scoring
-    (PRIORITY-1 / INTEREST / BACKGROUND tiers); entity co-occurrence link nodes.
- 2 Financial chokepoints -- genuine Base58Check + Bech32/Bech32m checksum proof
-    (BIP-173 polymod), ledger flow analytics (structuring, dispersion hubs,
-    peel chains), union-find common-input address clustering.
- 3 SDR capture forensics -- rtl_power sweep carrier discovery + occupancy
-    classification (repeater vs PTT-pattern vs sporadic), WAV PTT-burst timing
-    + CTCSS subtone detection (Goertzel bank over all 50 standard tones).
+- `ASSESSMENT.md`: the research question, judgments, competing explanations, and gaps.
+- `research.json`: the source ledger, dated records, analysis links, and open questions.
+- `METHOD.md`: source selection, classification, limitations, and reproduction.
+- `index.html`: the static study generated from the ledger.
+- `summary.json`: generated counts and validation scope.
+- `legacy-audit.json`: original synthetic package hashes and quality audit.
+- `MANIFEST.sha256`: SHA-256 of each current package artifact.
+- `cartelkit_deliverable.zip`: the public study, with fixed ZIP timestamps.
+- `dossier.html`: compatibility redirect to the current study.
 
-Authorized defensive research only. Not legal advice.
+## Verify and build
+
+Python 3.10+, standard library only. From this directory:
+
+```sh
+python cartelkit.py check
+python -m unittest discover -p 'test_*.py' -v
+python cartelkit.py package
+```
+
+`check` validates the ledger without writing files. `build` generates HTML and counts. `package` builds the study, hashes the artifacts, and replaces the ZIP. No command queries wallets, collects personal data, analyzes radio captures, or contacts an external service.
+
+Checks enforce explicit evidence status, resolvable citations, dated sources, organization IDs, a limited public schema, and publisher domains. Host matching identifies the expected publisher; it does not verify the document's contents. Manual review of the cited source is still required.
+
+## Authorship
+
+AI assisted the research, editing, and software preparation. The author must independently verify and explain the work. This AI-assisted study should not be submitted as a CIA writing/portfolio sample; [CIA applicant guidance](https://www.cia.gov/careers/cia-requirements/) prohibits AI use for those submissions. The study makes no claim of government affiliation, acceptance, or endorsement.

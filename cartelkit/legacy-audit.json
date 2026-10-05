@@ -1,0 +1,39 @@
+{
+  "reviewed_on": "2026-10-05",
+  "original_commit": "a39b96f3e7b4029d32f1b72c8059e4b1e4a44ee7",
+  "original_commit_url": "https://github.com/SSH-PuR66/SSH-PuR66.github.io/tree/a39b96f3e7b4029d32f1b72c8059e4b1e4a44ee7/cartelkit",
+  "original_description": "Terminal-style dossier generated from expressly synthetic text, transaction, and radio fixtures.",
+  "synthetic": true,
+  "evidence_for_current_assessment": false,
+  "manifest_files_checked": 11,
+  "manifest_matches": 11,
+  "original_archive_manifest_matches": 11,
+  "raw_git_blob_manifest_matches": 1,
+  "original_line_endings": "Manifest matches all eleven archived result files and the original Windows CRLF checkout. Git normalized line endings in ten text blobs, so those raw Git blobs do not match the old manifest. The new artifacts enforce LF explicitly.",
+  "original_archive_members": 21,
+  "hash_scope": "SHA-256 matches establish original archive/checkout file identity, not normalized Git blob identity, real-world attribution, corroboration, or capability.",
+  "manifest": [
+    {"path": "README.md", "sha256": "98cab1f90c0a1b5dd228f77534befa6305b440f0500ae7bd9219bd6972c956cf"},
+    {"path": "cartelkit.py", "sha256": "d923dc4c2f2d2c8832b9fe8aaad12ef8ece352331e6efb0e38f5c4417d2bde2d"},
+    {"path": "dossier.html", "sha256": "48f0459024d32309786d7203937b621db16d9ccee3f60ac30d076095ee966dd5"},
+    {"path": "fin_clusters.json", "sha256": "252c4b47fa44f4d25b82f222d255950d045a3c66ddc59a724a250c0057fde49b"},
+    {"path": "fin_ledger.json", "sha256": "b2d8947686280587c24c0150b89415f8ce6e15ca83ba91b1cfdedd827c87e04d"},
+    {"path": "fin_validate.json", "sha256": "400ab93213cc4a7b5ea03e908d375d72c3bba5bea44c05500cd4bc50704a4363"},
+    {"path": "osint.json", "sha256": "5582506a65df19fbdd85283d5d7520df3f3cee8cced2726d5a38d3d46a65c0c4"},
+    {"path": "sdr_sweep.json", "sha256": "88462863a8776cac49e189867627f7f225c8a39cc9c9d12e92d3b4e0e2d5e424"},
+    {"path": "sdr_wav.json", "sha256": "8e466b03668989560dd0cf21d14a1ef287903804d41cbe918d729d61ec2552d9"},
+    {"path": "summary.json", "sha256": "99a5ac87e2594d8a01c558b561d066439ca05f2c5cecc360adaca76b0d28b22a"},
+    {"path": "tempo_fusion.json", "sha256": "2c731279678d12f353a84926a99cca3e1627508eadb2e8069d2d8e8e40e4fb70"}
+  ],
+  "quality_findings": [
+    "The fixtures explicitly say synthetic; they are not observations of real groups or people.",
+    "Keyword priority weights have no measured precision or calibration and do not establish attribution.",
+    "Address format or checksum validation is separate from ownership or criminal attribution.",
+    "Transaction clustering requires assumptions and exceptions; common-input structure alone does not establish common ownership.",
+    "Day-level cross-domain co-occurrence does not establish a shared actor or causal relationship.",
+    "Radio tone and burst analysis of synthetic audio does not identify a person or organization.",
+    "The public terminal presentation and distribution marking imply authority that the synthetic provenance does not supply.",
+    "The original public output included a local absolute path; current public artifacts use no private workstation paths."
+  ],
+  "disposition": "Original fixtures and collection instructions retired from the current branch and public download. Git history preserves original artifacts. No private companion contents were used."
+}
