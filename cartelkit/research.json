@@ -1,0 +1,282 @@
+{
+  "schema_version": 2,
+  "title": "Cartels and the institutional record",
+  "edition": "2026-10-05",
+  "scope": "Organization-level public-source research on Sinaloa and CJNG, with institutional oversight and research-method context. A purposive source sample, not a comprehensive intelligence assessment.",
+  "assessment": {
+    "question": "What do selected public records establish about Sinaloa and CJNG, and how much do they tell us about the effectiveness of the institutional response?",
+    "conclusion": "The reviewed record establishes a dated U.S. threat assessment, formal designations, sanctions, and criminal proceedings. It does not establish the organizations' present strength or the causal effectiveness of the response. Oversight findings and contested modeling show why those questions need separate evidence.",
+    "competing_explanations": [
+      {
+        "id": "H01",
+        "statement": "More announced actions could reflect greater enforcement effort or visibility, a continuing threat, or both.",
+        "claim_ids": ["C01", "C03", "C04", "C05"],
+        "limits": "These are competing hypotheses. The sample contains no comparable action series, denominator, or counterfactual that distinguishes them."
+      },
+      {
+        "id": "H02",
+        "statement": "Oversight concerns could coexist with useful local results; they could also constrain the response.",
+        "claim_ids": ["C06", "C07"],
+        "limits": "The cited findings identify measurement and coordination issues. They do not estimate their effect on trafficking or establish universal institutional failure."
+      },
+      {
+        "id": "H03",
+        "statement": "Different estimates could arise from model assumptions, data coverage, or real change in the underlying population.",
+        "claim_ids": ["C08", "C09"],
+        "limits": "The bounded full-text comparison does not distinguish these explanations. Consistent definitions and independent replication would be needed."
+      }
+    ]
+  },
+  "assistance": {
+    "ai_assisted": true,
+    "submission_ready": false,
+    "description": "AI-assisted research, editing, and software preparation. The author must independently verify and explain the work.",
+    "cia_policy_source_id": "CIA-APPLICANT-AI-POLICY",
+    "cia_submission_note": "CIA prohibits AI use in submitted writing or portfolio samples. This AI-assisted study should not be submitted as a CIA writing/portfolio sample."
+  },
+  "organizations": [
+    {"id": "sinaloa", "name": "Sinaloa Cartel", "aliases": ["Cartel de Sinaloa"]},
+    {"id": "cjng", "name": "Cartel de Jalisco Nueva Generacion", "aliases": ["CJNG", "Jalisco New Generation Cartel"]}
+  ],
+  "sources": [
+    {
+      "id": "DEA-2025-NDTA",
+      "publisher": "U.S. Drug Enforcement Administration",
+      "title": "2025 National Drug Threat Assessment",
+      "url": "https://www.dea.gov/sites/default/files/2025-07/2025NationalDrugThreatAssessment.pdf",
+      "published_on": "2025-05-13",
+      "document_type": "agency_assessment",
+      "reviewed_on": "2026-10-05",
+      "locator": "Executive Summary, opening paragraph; publication landing page dated May 13, 2025",
+      "limits": "DEA's dated assessment; it does not independently establish present-day market shares or the guilt of a person.",
+      "independence_group": "DEA"
+    },
+    {
+      "id": "STATE-2025-FTO-NOTICE",
+      "publisher": "U.S. Department of State / Federal Register",
+      "title": "Foreign Terrorist Organization Designations, Public Notice 12672, FR Doc. 2025-02873",
+      "url": "https://public-inspection.federalregister.gov/2025-02873.pdf",
+      "published_on": "2025-02-20",
+      "document_type": "designation_notice",
+      "reviewed_on": "2026-10-05",
+      "locator": "Pages 1-2: organization list, designation, effective-on-publication language, publication date",
+      "limits": "Evidence of a U.S. administrative designation on that date. Current listing changes and any judicial challenges were not comprehensively reviewed.",
+      "independence_group": "STATE"
+    },
+    {
+      "id": "TREASURY-2026-SB0573",
+      "publisher": "U.S. Department of the Treasury / OFAC",
+      "title": "Treasury Takes Largest Action Ever Targeting Cartel de Jalisco Nueva Generacion",
+      "url": "https://home.treasury.gov/news/press-releases/sb0573",
+      "published_on": "2026-07-23",
+      "document_type": "sanctions_release",
+      "reviewed_on": "2026-10-05",
+      "locator": "Opening paragraph; paragraph identifying Executive Orders 14059 and 13224",
+      "limits": "An administrative sanctions announcement. Agency assertions about affiliations are attributed; sanctions do not substitute for criminal adjudication.",
+      "independence_group": "TREASURY"
+    },
+    {
+      "id": "DOJ-2026-CJNG-INDICTMENT",
+      "publisher": "U.S. Department of Justice, Middle District of Florida",
+      "title": "Homeland Security Task Force Announces the Indictment and Arrests of Four CJNG Members",
+      "url": "https://www.justice.gov/usao-mdfl/pr/homeland-security-task-force-announces-indictment-and-arrests-four-cjng-members-narco",
+      "published_on": "2026-08-11",
+      "document_type": "charging_release",
+      "reviewed_on": "2026-10-05",
+      "locator": "Opening announcement, affiliation paragraph, and presumption-of-innocence paragraph",
+      "limits": "The announcement reports allegations. Later dispositions were not verified; no individual profiles or operational allegations are reproduced here.",
+      "independence_group": "DOJ"
+    },
+    {
+      "id": "DOJ-2026-CJNG-PLEA",
+      "publisher": "U.S. Department of Justice, Office of Public Affairs",
+      "title": "Co-Founder of CJNG Pleads Guilty to Federal Drug Trafficking Conspiracy",
+      "url": "https://www.justice.gov/opa/pr/co-founder-cjng-pleads-guilty-federal-drug-trafficking-conspiracy",
+      "published_on": "2026-04-07",
+      "document_type": "guilty_plea_release",
+      "reviewed_on": "2026-10-05",
+      "locator": "Opening paragraph and paragraph beginning 'Valencia-Salazar pleaded guilty to one count'",
+      "limits": "DOJ reports a particular guilty plea. The signed plea, judgment, later sentence, and appeal record were not independently retrieved.",
+      "independence_group": "DOJ"
+    },
+    {
+      "id": "GAO-25-107667",
+      "publisher": "U.S. Government Accountability Office",
+      "title": "Illicit Fentanyl: DHS Has Various Efforts to Combat Trafficking but Could Better Assess Effectiveness",
+      "url": "https://www.gao.gov/products/gao-25-107667",
+      "published_on": "2025-09-02",
+      "document_type": "audit_report",
+      "reviewed_on": "2026-10-05",
+      "locator": "What GAO Found: assessment program and performance goals; Why GAO Did This Study: FY2021-2024 scope",
+      "limits": "A dated oversight finding about measurement. Seizures and activity counts do not by themselves demonstrate reduced trafficking or causal program impact.",
+      "independence_group": "GAO"
+    },
+    {
+      "id": "GAO-26-107414",
+      "publisher": "U.S. Government Accountability Office",
+      "title": "Combatting Illicit Drugs: DOJ and DHS Must Resolve Uncertainties Around Collaboration to Ensure Effective Counternarcotics Investigations",
+      "url": "https://www.gao.gov/products/gao-26-107414",
+      "published_on": "2026-09-30",
+      "document_type": "audit_report",
+      "reviewed_on": "2026-10-05",
+      "locator": "What GAO Found: May 2026 memorandum and agreement requirements; Why GAO Did This Study: nine field offices",
+      "limits": "The field-office sample was nongeneralizable. This review does not estimate the nationwide prevalence of collaboration failures or attribute them to a particular cartel.",
+      "independence_group": "GAO"
+    },
+    {
+      "id": "ACADEMIC-MODEL-2307-06302",
+      "publisher": "Rafael Prieto-Curiel, Gian Maria Campedelli, and Alejandro Hope / arXiv",
+      "title": "Reducing cartel recruitment is the only way to lower violence in Mexico",
+      "url": "https://arxiv.org/pdf/2307.06302v1",
+      "published_on": null,
+      "document_type": "author_preprint",
+      "reviewed_on": "2026-10-05",
+      "locator": "Author preprint v1, section 2.2 page 5 and Figure 4 page 6; intervention scenarios for 2027 relative to 2022",
+      "limits": "Selected full-text sections reviewed; no independent model reproduction. These are published model outputs, not observed effects or group-level capacity estimates. The v1 preprint was not independently collated against the final Science article; publication date is unasserted because retrieved metadata conflicted.",
+      "independence_group": "PRIETO-CURIEL-ET-AL"
+    },
+    {
+      "id": "ACADEMIC-CRITIQUE-2310-05975",
+      "publisher": "Raul Rojas / arXiv",
+      "title": "Reducing cartel recruitment and upholding the rule of law is the only way to reduce violence in Mexico",
+      "url": "https://arxiv.org/html/2310.05975v1",
+      "published_on": "2023-10-02",
+      "document_type": "comment_preprint",
+      "reviewed_on": "2026-10-05",
+      "locator": "Comment v1, section 2: model and parameter-identification discussion",
+      "limits": "Bounded full-text review. The critique addresses the published Science article; comparison here uses the original arXiv v1. It acknowledges the network construction and four optimized dynamics parameters. This review does not adjudicate full-model identifiability, peer-review status, or later responses.",
+      "independence_group": "ROJAS"
+    },
+    {
+      "id": "CIA-APPLICANT-AI-POLICY",
+      "publisher": "Central Intelligence Agency",
+      "title": "CIA Requirements: Guidelines for Use of Artificial Intelligence in the Applicant Process",
+      "url": "https://www.cia.gov/careers/cia-requirements/",
+      "published_on": null,
+      "document_type": "applicant_policy",
+      "reviewed_on": "2026-10-05",
+      "locator": "Guidelines for Use of Artificial Intelligence in the Applicant Process",
+      "limits": "Agency-specific applicant guidance, reviewed on this date. Other agencies' sample requirements were not evaluated.",
+      "independence_group": "CIA"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C01",
+      "org_ids": ["sinaloa", "cjng"],
+      "statement": "DEA's 2025 assessment identifies Sinaloa and CJNG as dominant drug-trafficking threats to the United States.",
+      "status": "agency_assessment",
+      "as_of": "2025-05-13",
+      "source_ids": ["DEA-2025-NDTA"],
+      "limits": "An attributed 2025 assessment, not a measured 2026 market share."
+    },
+    {
+      "id": "C02",
+      "org_ids": ["sinaloa", "cjng"],
+      "statement": "The State Department's February 2025 notice designated Sinaloa and CJNG as Foreign Terrorist Organizations, effective upon publication.",
+      "status": "official_designation",
+      "as_of": "2025-02-20",
+      "source_ids": ["STATE-2025-FTO-NOTICE"],
+      "limits": "A formal U.S. designation; it is not a criminal verdict against everyone associated with a group."
+    },
+    {
+      "id": "C03",
+      "org_ids": ["cjng"],
+      "statement": "Treasury announced sanctions against more than 50 individuals and entities it linked to CJNG on July 23, 2026.",
+      "status": "administrative_action",
+      "as_of": "2026-07-23",
+      "source_ids": ["TREASURY-2026-SB0573"],
+      "limits": "The affiliations are Treasury's determinations. Sanctions are separate from a criminal conviction."
+    },
+    {
+      "id": "C04",
+      "org_ids": ["cjng"],
+      "statement": "DOJ announced an indictment against four defendants it alleged were affiliated with CJNG in August 2026.",
+      "status": "allegation",
+      "as_of": "2026-08-11",
+      "source_ids": ["DOJ-2026-CJNG-INDICTMENT"],
+      "limits": "Charges remain allegations at the cited procedural stage; defendants are presumed innocent. Later case outcomes were not checked."
+    },
+    {
+      "id": "C05",
+      "org_ids": ["cjng"],
+      "statement": "DOJ reported a CJNG co-founder's guilty plea to a federal narcotics conspiracy in April 2026.",
+      "status": "judicial_outcome_reported",
+      "as_of": "2026-04-07",
+      "source_ids": ["DOJ-2026-CJNG-PLEA"],
+      "limits": "A reported plea in a different case from C04. The judgment and later sentence were not independently verified."
+    },
+    {
+      "id": "C06",
+      "org_ids": [],
+      "statement": "GAO's 2025 review found that DHS lacked the required assessment program and performance goals for evaluating fentanyl-trafficking efforts.",
+      "status": "oversight_finding",
+      "as_of": "2025-09-02",
+      "source_ids": ["GAO-25-107667"],
+      "limits": "A finding at publication. The reviewed page records later agency plans; this ledger does not claim the deficiency remains unchanged."
+    },
+    {
+      "id": "C07",
+      "org_ids": [],
+      "statement": "GAO's September 2026 review found uncertainty over DEA and HSI collaboration requirements after a May 2026 DOJ memorandum.",
+      "status": "oversight_finding",
+      "as_of": "2026-09-30",
+      "source_ids": ["GAO-26-107414"],
+      "limits": "A nongeneralizable field-office sample supports the oversight review, not a nationwide failure rate."
+    },
+    {
+      "id": "C08",
+      "org_ids": [],
+      "statement": "The author preprint's 2027 scenario reports weekly casualties 8% above 2022 with doubled incapacitation, versus 40% above 2022 under unchanged conditions.",
+      "status": "academic_model",
+      "as_of": "2026-10-05",
+      "source_ids": ["ACADEMIC-MODEL-2307-06302"],
+      "limits": "Rounded published model outputs, not measured effects. Both percentages use 2022 as the reference; the same-year modeled baseline is the unchanged 2027 scenario. No independent reproduction is claimed."
+    },
+    {
+      "id": "C09",
+      "org_ids": [],
+      "statement": "A separate academic comment challenges that model's identification and central conclusion.",
+      "status": "academic_critique",
+      "as_of": "2023-10-02",
+      "source_ids": ["ACADEMIC-CRITIQUE-2310-05975"],
+      "limits": "A methodological critique, not a numerical refutation of the full calibrated model. It recognizes network-derived interaction entries and four optimized dynamics parameters; this study does not adjudicate identification."
+    }
+  ],
+  "analyses": [
+    {
+      "id": "A01",
+      "statement": "The reviewed record shows sustained U.S. institutional concern and action toward Sinaloa and CJNG across distinct legal instruments. It does not measure their current organizational strength.",
+      "status": "analysis",
+      "claim_ids": ["C01", "C02", "C03", "C04", "C05"],
+      "limits": "An inference about this selected record, not a trend estimate. Designation, sanctions, allegations, and a reported plea have different legal meanings; the DOJ examples are different cases."
+    },
+    {
+      "id": "A02",
+      "statement": "The selected sources do not establish whether the response reduced trafficking. GAO's measurement and coordination findings make activity counts an inadequate substitute for an outcome evaluation.",
+      "status": "analysis",
+      "claim_ids": ["C03", "C06", "C07"],
+      "limits": "An evidence gap, not a finding that the response failed. The 2025 deficiency is historical; the 2026 field-office sample is nongeneralizable. No causal impact estimate is attempted."
+    },
+    {
+      "id": "A03",
+      "statement": "Aggregate academic estimates cannot resolve present group-level capacity in this study. The bounded model comparison and critique leave assumptions and identification questions open; DEA's threat assessment measures a different construct.",
+      "status": "analysis",
+      "claim_ids": ["C01", "C08", "C09"],
+      "limits": "Bounded source comparison; no model or agency estimate is independently reproduced."
+    },
+    {
+      "id": "A04",
+      "statement": "Growth from 2022 under the intervention is not growth caused by that intervention. In the published 2027 comparison, the doubled-incapacitation scenario is below the unchanged scenario despite remaining above 2022.",
+      "status": "analysis",
+      "claim_ids": ["C08", "C09"],
+      "limits": "Interpretation of the cited v1 scenario and its reference years. It does not settle the critique, independently validate the model, establish an observed policy effect, or imply that the paper never acknowledged containment."
+    }
+  ],
+  "open_questions": [
+    "Have designation or sanctions listings changed since the dated actions cited here?",
+    "What do the signed court records and later dispositions establish in the two DOJ examples?",
+    "What independently evaluated outcomes support claims of institutional effectiveness?",
+    "How sensitive are published academic estimates to model identification and input definitions?"
+  ]
+}

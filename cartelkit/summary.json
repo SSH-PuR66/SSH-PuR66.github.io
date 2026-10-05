@@ -1,41 +1,21 @@
 {
-  "generated": "2026-08-15T15:53:52Z",
-  "synthetic": true,
-  "pillars": [
-    "fin_clusters",
-    "fin_ledger",
-    "osint",
-    "sdr_sweep",
-    "sdr_wav",
-    "tempo",
-    "validate"
-  ],
-  "headline": {
-    "osint": {
-      "docs": 3,
-      "priority1": 2,
-      "link_nodes": 2
-    },
-    "fin": {
-      "flags": [
-        "STRUCTURING",
-        "DISPERSION-HUB",
-        "PEEL-CHAIN"
-      ],
-      "clusters": 1
-    },
-    "sdr": {
-      "carriers": 3,
-      "ptt_pattern": 1,
-      "ctcss": [
-        88.5
-      ]
-    },
-    "tempo": {
-      "coincidences": 1,
-      "flags": [
-        "COMMS-PAYMENT-COINCIDENCE"
-      ]
-    }
-  }
+  "schema_version": 2,
+  "edition": "2026-10-05",
+  "synthetic_findings_used": false,
+  "sources": 10,
+  "claims": 9,
+  "analyses": 4,
+  "claims_by_status": {
+    "academic_critique": 1,
+    "academic_model": 1,
+    "administrative_action": 1,
+    "agency_assessment": 1,
+    "allegation": 1,
+    "judicial_outcome_reported": 1,
+    "official_designation": 1,
+    "oversight_finding": 2
+  },
+  "ai_assisted": true,
+  "submission_ready": false,
+  "validation_scope": "Structure and provenance links; not factual corroboration or current sanctions screening."
 }
