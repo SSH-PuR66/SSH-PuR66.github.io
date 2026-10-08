@@ -113,7 +113,7 @@ class ResearchChecks(unittest.TestCase):
         self.data['claims'][0]['statement']='<script>bad()</script> & "quoted"'
         html=study.render(self.data)
         self.assertIn('&lt;script&gt;bad()&lt;/script&gt; &amp; &quot;quoted&quot;',html)
-        self.assertEqual(Links(html).scripts,[])
+        self.assertEqual([item.get('src') for item in Links(html).scripts],['audit-math.js','audit-app.js'])
 
     def test_rendered_internal_links_and_local_assets_resolve(self):
         parsed=Links(study.render(self.data))

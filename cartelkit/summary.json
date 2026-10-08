@@ -2,6 +2,15 @@
   "schema_version": 2,
   "edition": "2026-10-05",
   "synthetic_findings_used": false,
+  "workbench_edition": "2026-10-08",
+  "model_audit": {
+    "upstream_commit": "224e9cc9382672cd6e48b3de830afbe9706b3d0a",
+    "source_rows": 40297,
+    "aggregate_sentence_lengths": 804,
+    "code_findings": 3,
+    "exact_equation_checks": 20,
+    "full_model_executed": false
+  },
   "sources": 10,
   "claims": 9,
   "analyses": 4,
@@ -17,5 +26,5 @@
   },
   "ai_assisted": true,
   "submission_ready": false,
-  "validation_scope": "Structure and provenance links; not factual corroboration or current sanctions screening."
+  "validation_scope": "Institutional ledger structure; pinned-input sentence calculation; full-equation identity. Not complete empirical or policy validation, or current sanctions screening."
 }
