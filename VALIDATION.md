@@ -1,4 +1,18 @@
-# Validation receipt
+# Validation receipt — edition 02
+
+Reviewed 8 October 2026. Institutional source ledger retains its 5 October review dates.
+
+- 35 offline Python tests and 9 Node calculation tests passed.
+- Exact upstream revision: `224e9cc9382672cd6e48b3de830afbe9706b3d0a`; both retrieved files verified against SHA-256 before processing.
+- 40,297 rows reduced to 804 sentence/count aggregates. No person identifiers, locations or offence fields enter the public output.
+- Independent expectation: unweighted 20.085401311905255 years; inverse-length assignment 8.713438481497516 years. No sampling seed or third-party numerical library is needed.
+- Full 2023-equation transformation: 20 exact rational cases; four 208-step RK4 trajectories; maximum relative discrepancy about 1.31e-15 in the recorded run. Inputs are mathematical fixtures, not an empirical network.
+- Negative controls demonstrate that retaining an unscaled incapacitation parameter breaks equivariance and that keeping absolute targets fixed does not preserve residuals after scaling output.
+- Source findings are pinned to R lines and distinguished from full-model runtime impact. The complete R analysis and original INEGI microdata extraction have not been run.
+- Package regeneration and internal links are checked. The package uses a fixed 5 October archive timestamp for continuity, while the model-audit edition is explicitly 8 October.
+- Browser interaction verification is a separate release check; the tests above cover calculation and artifact behavior.
+
+## Earlier institutional-ledger receipt
 
 Reviewed 2026-10-05. Public-source assessment edition 2026-10-05.
 

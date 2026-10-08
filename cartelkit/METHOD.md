@@ -1,5 +1,10 @@
 # Method and limitations
 
+## Edition 02: executable model audit
+
+The 8 October 2026 workbench is documented separately in [MODEL-AUDIT.md](MODEL-AUDIT.md). It recalculates the 2025 author code’s sentence assignment from its pinned data extract, inspects three implementation questions, checks a scale transformation of the full 2023 equations, and re-expresses the 2023 policy comparison. It does not run the complete models. The institutional ledger and its 5 October coverage below remain unchanged.
+
+
 ## Research question
 
 What do selected public institutional records establish about Sinaloa and CJNG, and how much can those records tell us about the effectiveness of the response?

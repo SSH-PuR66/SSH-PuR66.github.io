@@ -23,7 +23,8 @@ SOURCE_HOSTS = {'agency_assessment':'www.dea.gov', 'designation_notice':'public-
     'guilty_plea_release':'www.justice.gov', 'audit_report':'www.gao.gov', 'author_preprint':'arxiv.org',
     'comment_preprint':'arxiv.org', 'applicant_policy':'www.cia.gov'}
 ARTIFACTS = ('README.md','METHOD.md','ASSESSMENT.md','cartelkit.py','test_research.py','research.json',
-    'legacy-audit.json','summary.json','index.html','dossier.html','style.css')
+    'legacy-audit.json','summary.json','index.html','dossier.html','style.css',
+    'model_audit.py','model-audit.json','MODEL-AUDIT.md','audit-panel.html','audit.css','audit-math.js','audit-app.js','test_model_audit.py','audit-math.test.cjs')
 def load(path=ROOT/'research.json'):
     return json.loads(Path(path).read_text(encoding='utf-8'))
 def validate(data):
@@ -113,11 +114,23 @@ def validate(data):
     if not all(text(question) for question in data['open_questions']): errors.append('open questions: nonempty text required')
     return errors
 def summary(data):
+    audit=json.loads((ROOT/'model-audit.json').read_text(encoding='utf-8'))
     return {'schema_version':2,'edition':data['edition'],'synthetic_findings_used':False,
+        'workbench_edition':audit['edition'],
+        'model_audit':{'upstream_commit':audit['upstream']['commit'],'source_rows':audit['sentences']['rows'],
+            'aggregate_sentence_lengths':audit['sentences']['unique_lengths'],'code_findings':len(audit['code_findings']),
+            'exact_equation_checks':audit['checks']['exact_rational_cases'],'full_model_executed':False},
         'sources':len(data['sources']),'claims':len(data['claims']),'analyses':len(data['analyses']),
         'claims_by_status':dict(sorted(Counter(c['status'] for c in data['claims']).items())),
         'ai_assisted':True,'submission_ready':False,
-        'validation_scope':'Structure and provenance links; not factual corroboration or current sanctions screening.'}
+        'validation_scope':'Institutional ledger structure; pinned-input sentence calculation; full-equation identity. Not complete empirical or policy validation, or current sanctions screening.'}
+def audit_panel(prefix=''):
+    data=json.loads((ROOT/'model-audit.json').read_text(encoding='utf-8'))
+    e=lambda value:escape(str(value),quote=True)
+    rows=''.join(f'<div data-bin><label for="audit-bin-{i}">{i*10}–{(i+1)*10 if i<9 else "∞"} y</label><meter id="audit-bin-{i}" min="0" max="1" value="0" aria-label="Share of assigned sentences {i*10} years and above">0</meter><span>—</span></div>' for i in range(10))
+    findings=''.join(f'<article class="ca-finding"><p class="ca-kicker">{e(item["id"])} / {e(item["status"])}</p><h4>{e(item["title"])}</h4><p>{e(item["observation"])}</p><p><strong>Why it matters:</strong> {e(item["implication"])}</p><p>{e(item["limit"])}</p><a href="{e(item["source_url"])}">Inspect the pinned code ↗</a>'+ (f' · <a href="{e(item["second_url"])}">Inspect the sum ↗</a>' if item.get('second_url') else '')+'</article>' for item in data['code_findings'])
+    return (ROOT/'audit-panel.html').read_text(encoding='utf-8').replace('__PREFIX__',e(prefix)).replace('__HISTOGRAM_ROWS__',rows).replace('__CODE_FINDINGS__',findings)
+
 def render(data):
     errors=validate(data)
     if errors: raise ValueError('; '.join(errors))
@@ -131,12 +144,13 @@ def render(data):
     sources=''.join(f'<li id="source-{e(s["id"])}"><p class="record">{e(s["id"])} · {e(s["document_type"].replace("_"," "))}</p><h3><a href="{e(s["url"])}">{e(s["title"])}</a></h3><p>{e(s["publisher"])} · Published: {e(s["published_on"] or "date not asserted")} · Reviewed: {e(s["reviewed_on"])}</p><p><strong>Locator:</strong> {e(s["locator"])}</p><p>{e(s["limits"])}</p></li>' for s in data['sources'])
     questions=''.join(f'<li>{e(q)}</li>' for q in data['open_questions'])
     return f'''<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{e(data['title'])} — CARTELKIT</title><meta name="description" content="A dated public-source ledger separating institutional assessments, official actions, allegations, reported judicial outcomes, and analysis."><link rel="stylesheet" href="style.css"><link rel="canonical" href="https://ssh-pur66.github.io/cartelkit/"></head><body>
-<a class="skip" href="#main">Skip to the research</a><header><a class="brand" href="./">CARTELKIT / PUBLIC RECORD</a><nav aria-label="Main navigation"><a href="#analysis">Assessment</a><a href="#claims">Records</a><a href="#sources">Sources</a><a href="research.json">Data</a><a href="METHOD.md">Method</a></nav></header>
-<main id="main"><section class="opening"><p class="record">Public-source assessment · Reviewed {e(data['edition'])}</p><h1>{e(data['title'])}.</h1><p class="deck">{e(data['assessment']['question'])}</p><p>{e(data['scope'])}</p><p>{e(data['assessment']['conclusion'])}</p><div class="downloads"><a href="research.json">Read the citation ledger ↗</a><a href="cartelkit_deliverable.zip">Download the reproducible study ↗</a><a href="ASSESSMENT.md">Assessment text ↗</a></div></section>
-<section id="analysis"><p class="record">01 / KEY JUDGMENTS</p><h2>What the record supports.</h2><div class="records">{notes}</div><h2>Competing explanations.</h2><p>These hypotheses identify what the source sample cannot distinguish.</p><div class="records">{alternatives}</div></section>
-<section id="claims"><p class="record">02 / ATTRIBUTED RECORDS</p><h2>Keep the status with the statement.</h2><p>These records report what the cited institutions and authors published. They are not new intelligence discoveries.</p><div class="records">{rows}</div></section>
-<section id="sources"><p class="record">03 / CITATION LEDGER</p><h2>Open the document.</h2><p>The court examples use DOJ announcements; signed court records were not independently retrieved. Selected academic full-text sections were reviewed; the model was not independently reproduced.</p><ol class="sources">{sources}</ol></section>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CARTELKIT — Open the model. Check the claim.</title><meta name="description" content="Reproduce a sentence-weighting result from 40,297 records, inspect pinned code, and test the assumptions behind published cartel models."><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="audit.css"><script src="audit-math.js" defer></script><script src="audit-app.js" defer></script><link rel="canonical" href="https://ssh-pur66.github.io/cartelkit/"></head><body>
+<a class="skip" href="#main">Skip to the research</a><header><a class="brand" href="./">CARTELKIT / PUBLIC RECORD</a><nav aria-label="Main navigation"><a href="#model-audit">Model audit</a><a href="#analysis">Assessment</a><a href="#claims">Records</a><a href="#sources">Sources</a><a href="research.json">Data</a><a href="METHOD.md">Method</a></nav></header>
+<main id="main"><section class="opening"><p class="record">CARTELKIT / Research workbench · Edition 02 · 8 October 2026</p><h1>Open the model.<br>Check the claim.</h1><p class="deck">Cartel research should survive a closer look.</p><p>Trace the actual data and code behind published cartel models. Reproduce a sentence-weighting result, inspect three implementation questions, and separate an assumed population scale from a measured one.</p><div class="downloads"><a href="#model-audit">Enter the workbench ↓</a><a href="MODEL-AUDIT.md">Read the research note ↗</a><a href="cartelkit_deliverable.zip">Download the reproducible study ↓</a></div></section>
+{audit_panel()}
+<section id="analysis"><p class="record">02 / ASSESSMENT</p><h2>What the record supports.</h2><div class="records">{notes}</div><h2>Competing explanations.</h2><p>These hypotheses identify what the source sample cannot distinguish.</p><div class="records">{alternatives}</div></section>
+<section id="claims"><p class="record">03 / ATTRIBUTED RECORDS</p><h2>Keep the status with the statement.</h2><p>Institutional context reviewed 5 October 2026. These records retain their original dates and evidentiary status; the model audit above is a separate 8 October analysis.</p><div class="records">{rows}</div></section>
+<section id="sources"><p class="record">04 / CITATION LEDGER</p><h2>Open the document.</h2><p>The court examples use DOJ announcements; signed court records were not independently retrieved. The model audit reproduces the supplied sentence-weighting expectation and checks an equation identity. It does not execute either full calibrated model.</p><ol class="sources">{sources}</ol></section>
 <section id="questions"><h2>Questions left open.</h2><ul>{questions}</ul></section>
 <section id="assistance"><h2>Preparation and authorship.</h2><p>{e(data['assistance']['description'])}</p><p>{e(data['assistance']['cia_submission_note'])} <a href="{e(source_map[data['assistance']['cia_policy_source_id']]['url'])}">CIA applicant guidance ↗</a></p><p>The previous download contained synthetic wallet, text, and radio fixtures. This edition retires that public package; its original commit and artifact hashes are documented in the audit. Those fixtures supply no evidence for this ledger.</p></section>
 </main><footer>Independent public-source study · No agency affiliation or endorsement · <a href="https://github.com/SSH-PuR66/SSH-PuR66.github.io">Source and review history ↗</a></footer></body></html>
